@@ -15,7 +15,7 @@
           USERNAME: "toto"
           PASSWORD: "python"
         volumes:
-          - ../website:/var/www/html
+          - ./../website:/var/www/html
 
     - name: Create api containers
       docker_container:
@@ -24,5 +24,5 @@
         ports: 5000:5000
         pull: true
         volumes: 
-          - ../simple_api/student_age.json:/data/student_age.json
+          - ./../simple_api/student_age.json:/data/student_age.json
 ...
