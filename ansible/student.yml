@@ -12,8 +12,8 @@
         ports: 80:80
         pull: true
         env: 
-          - USERNAME: "toto"
-          - PASSWORD: "python"
+          USERNAME: "toto"
+          PASSWORD: "python"
         volumes:
           - ./website:/var/www/html
 
