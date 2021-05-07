@@ -5,10 +5,24 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: Create default containers
+    - name: Create website container
       docker_container:
-        name: "fil-rouge"
-        image: "antoinebouquet1010/fil-rouge"
+        name: "website"
+        image: "php:7.2-apache"
         ports: 80:80
         pull: true
+        env: 
+          - USERNAME: "toto"
+          - PASSWORD: "python"
+        volumes:
+          - ./website:/var/www/html
+
+    - name: Create api containers
+      docker_container:
+        name: "api"
+        image: "antoinebouquet1010/fil-rouge"
+        ports: 5000:5000
+        pull: true
+        volumes: 
+          - ./simple_api/student_age.json:/data/student_age.json
 ...

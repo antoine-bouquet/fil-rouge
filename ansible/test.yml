@@ -11,5 +11,5 @@
         url: "http://{{ ansible_host }}"
         return_content: yes
       register: this
-      failed_when: "'Hello universe' not in this.content"
+      failed_when: "'Student list' not in this.content"
 ...
