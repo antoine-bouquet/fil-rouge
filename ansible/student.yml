@@ -1,0 +1,14 @@
+---
+- name: "fil-rouge installation"
+  become: true
+  hosts: prod
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Create default containers
+      docker_container:
+        name: "fil-rouge"
+        image: "antoinebouquet1010/fil-rouge"
+        ports: 80:80
+        pull: true
+...
