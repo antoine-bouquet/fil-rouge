@@ -20,7 +20,7 @@
     - name: Create api containers
       docker_container:
         name: "api"
-        image: "antoinebouquet1010/fil-rouge"
+        image: "antoinebouquet1010/fil-rouge-test"
         ports: 5000:5000
         pull: true
         volumes: 
