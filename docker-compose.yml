@@ -1,0 +1,29 @@
+version: '2'
+services:
+  website: 
+    container_name: website
+    image: php:7.2-apache
+    depends_on:
+      - api   
+    environment:
+      - USERNAME=toto
+      - PASSWORD=python
+    networks:
+      - webapp-network
+    volumes:
+      - ${PWD}/website:/var/www/html
+    ports:
+      - "80:80"
+  api:
+    container_name: api
+    image: antoinebouquet1010/fil-rouge:latest
+    volumes:
+      - ${PWD}/simple_api/student_age.json:/data/student_age.json
+    ports:
+      - "5000:5000"
+    networks:
+      - webapp-network
+
+networks:
+  webapp-network:
+    driver: bridge      
