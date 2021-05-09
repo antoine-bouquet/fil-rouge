@@ -11,14 +11,14 @@ services:
     networks:
       - webapp-network
     volumes:
-      - ${PWD}/website:/var/www/html
+      - ./website:/var/www/html
     ports:
       - "80:80"
   api:
     container_name: api
     image: antoinebouquet1010/fil-rouge:latest
     volumes:
-      - ${PWD}/simple_api/student_age.json:/data/student_age.json
+      - ./simple_api/student_age.json:/data/student_age.json
     ports:
       - "5000:5000"
     networks:
