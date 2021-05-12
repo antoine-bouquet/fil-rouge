@@ -67,7 +67,7 @@ pipeline {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook -vvv -i prod.yml student.yml
+                        ansible-playbook  -i prod.yml student.yml
                       '''
                 }
             }
