@@ -25,6 +25,16 @@ pipeline {
                }
             }
        }
+       stage('Test image') {
+            agent { docker { image 'curlimages/curl' } }
+            steps {
+                script {
+                        sh '''
+                        curl http://172.17.0.1/ 
+                        '''
+              }
+           }
+        }
       stage('Clean Container') {
           agent any
           steps {
