@@ -5,6 +5,9 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
+    - name: display working dir
+      command:
+ 
     - name: example copying file with owner and permissions
       copy:
         src: /home/centos/fil-rouge/website/
