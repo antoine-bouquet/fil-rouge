@@ -25,7 +25,7 @@ pipeline {
                }
             }
        }
-       stage('Test image') {
+       stage('Test image frontend') {
             agent { docker { image 'curlimages/curl' } }
             steps {
                 script {
@@ -35,6 +35,17 @@ pipeline {
               }
            }
         }
+stage('Test image api') {
+            agent { docker { image 'curlimages/curl' } }
+            steps {
+                script {
+                        sh '''
+                        curl http://172.17.0.1:5000
+                        '''
+              }
+           }
+        }
+
       stage('Clean Container') {
           agent any
           steps {
