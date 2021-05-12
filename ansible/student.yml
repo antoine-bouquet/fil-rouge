@@ -10,12 +10,14 @@
         src: /home/centos/fil-rouge/website/
         dest: /home/centos/fil-rouge/website
         mode: preserve
+        remote_src: yes         
 
     - name: example copying file with owner and permissions
       copy:
         src: /home/centos/fil-rouge/simple_api/
         dest: /home/centos/fil-rouge/simple_api
         mode: preserve
+        remote_src: yes
 
     - name: Create website container
       docker_container:
