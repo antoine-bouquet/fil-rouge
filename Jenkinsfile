@@ -25,27 +25,16 @@ pipeline {
                }
             }
        }
-       stage('Test image frontend') {
+       stage('Test image api') {
             agent { docker { image 'curlimages/curl' } }
             steps {
                 script {
                         sh '''
-                        curl http://172.17.0.1/ 
+                        curl -u toto:python -X GET http://192.168.31.135:5000/pozos/api/v1.0/get_student_ages 
                         '''
               }
            }
         }
-stage('Test image api') {
-            agent { docker { image 'curlimages/curl' } }
-            steps {
-                script {
-                        sh '''
-                        curl http://172.17.0.1:5000
-                        '''
-              }
-           }
-        }
-
       stage('Clean Container') {
           agent any
           steps {
