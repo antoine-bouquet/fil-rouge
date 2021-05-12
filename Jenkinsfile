@@ -67,7 +67,7 @@ pipeline {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook  -i prod.yml student.yml
+                        sudo ansible-playbook  -i prod.yml student.yml
                       '''
                 }
             }
