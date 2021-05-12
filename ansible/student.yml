@@ -1,6 +1,6 @@
 ---
 - name: "fil-rouge installation"
-  become: true
+  become: yes
   hosts: prod
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -9,6 +9,8 @@
       copy:
         src: /home/centos/fil-rouge/website/
         dest: /home/centos/fil-rouge/website
+        owner: centos
+        group: centos
         mode: preserve       
 
     - name: example copying file with owner and permissions
