@@ -24,5 +24,5 @@
         ports: 5000:5000
         pull: true
         volumes: 
-          - /home/centos/fil-rouge/simple_api/student_age.json:/data/student_age.json
+          - /home/centos/fil-rouge/simple_api:/data
 ...
