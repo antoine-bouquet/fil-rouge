@@ -5,19 +5,15 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
+    - name: "Clean Folder"
+      file:
+        path: "/home/{{ ansible_user }}/fil-rouge/"
+        state: absent
+    
     - name: example copying file with owner and permissions
       copy:
-        src: /home/centos/fil-rouge/website/
-        dest: /fil-rouge/website
-        owner: centos
-        group: centos
-        mode: preserve       
-
-    - name: example copying file with owner and permissions
-      copy:
-        src: /home/centos/fil-rouge/simple_api/
-        dest: /home/centos/fil-rouge/simple_api
-        mode: preserve
+        src: /home/centos/fil-rouge/
+        dest: /home/{{ ansible_user }}/fil-rouge/       
 
     - name: Create website container
       docker_container:
