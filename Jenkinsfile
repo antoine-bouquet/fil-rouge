@@ -69,6 +69,7 @@ pipeline {
                         echo "$PWD"
                         ls
                         cd ansible
+                        echo "$PWD/.."
                         ansible-playbook  -i prod.yml student.yml
                       '''
                 }
