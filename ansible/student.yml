@@ -12,7 +12,7 @@
     
     - name: example copying file with owner and permissions
       copy:
-        src: /home/centos/fil-rouge/
+        src: ../
         dest: /home/{{ ansible_user }}/fil-rouge/       
 
     - name: Create website container

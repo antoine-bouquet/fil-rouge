@@ -66,11 +66,6 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "$PWD"
-                        ls
-                        cd ansible
-                        cd ../
-                        echo "$PWD"
                         cd ansible
                         ansible-playbook  -i prod.yml student.yml
                       '''
