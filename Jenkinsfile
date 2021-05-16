@@ -7,7 +7,7 @@ pipeline {
      agent none
      stages {
          stage('Build image') {
-             agent any
+             agent { docker { image 'docker' } }
              steps {
                 script {
                   sh 'docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG simple_api/'
@@ -15,7 +15,7 @@ pipeline {
              }
         }
         stage('Run container based on builded image') {
-            agent any
+            agent { docker { image 'docker' } }
             steps {
                script {
                  sh '''
@@ -36,7 +36,7 @@ pipeline {
            }
         }
       stage('Clean Container') {
-          agent any
+          agent { docker { image 'docker' } }
           steps {
              script {
                sh '''
@@ -46,7 +46,7 @@ pipeline {
           }
      }
     stage('Push image on dockerhub') {
-           agent any
+           agent { docker { image 'docker' } }
            environment {
                 DOCKERHUB_LOGIN = credentials('dockerhub_login_antoine')
 
