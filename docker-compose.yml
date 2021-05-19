@@ -11,14 +11,14 @@ services:
     networks:
       - webapp-network
     volumes:
-      - ${PWD}/website:/var/www/html
+      - /home/centos/fil-rouge/website:/var/www/html
     ports:
       - "50:80"
   api:
     container_name: api
     image: registry.gitlab.com/fil-rouge2/fil-rouge/fil-rouge
     volumes:
-      - ${PWD}/simple_api/student_age.json:/data/student_age.json
+      - /home/centos/fil-rouge/simple_api/student_age.json:/data/student_age.json
     networks:
       - webapp-network
 
