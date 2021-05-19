@@ -67,7 +67,7 @@ pipeline {
                script {
                    sh '''
                    docker login registry.gitlab.com --username ${GITLAB_LOGIN_USR} --password ${GITLAB_LOGIN_PSW}
-                   docker tag ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
+                   docker tag ${LOCAL_REPO}/${IMAGE_NAME}:${IMAGE_TAG}  ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
 	           docker push ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
                    '''
                }
