@@ -11,14 +11,14 @@ services:
     networks:
       - webapp-network
     volumes:
-      - ./website:/var/www/html
+      - ${PWD}/website:/var/www/html
     ports:
       - "50:80"
   api:
     container_name: api
     image: registry.gitlab.com/fil-rouge2/fil-rouge/fil-rouge
     volumes:
-      - ./simple_api/student_age.json:/data/student_age.json
+      - ${PWD}/simple_api/student_age.json:/data/student_age.json
     networks:
       - webapp-network
 
