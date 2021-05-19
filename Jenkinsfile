@@ -15,7 +15,7 @@ pipeline {
                 }
              }
         }
-      stage('Run container based on builded image') {
+         stage('Run container based on builded image') {
             agent { docker { image 'docker' } }
             steps {
                script {
@@ -37,7 +37,7 @@ pipeline {
               }
            }
         }
-        stage('Clean Container') {
+        stage('Clean API Container') {
           agent { docker { image 'docker' } }
           steps {
              script {
@@ -46,7 +46,7 @@ pipeline {
                '''
              }
           }
-     }
+      }
 
         stage('Run containers of the  application') {
             agent { docker { image 'tmaier/docker-compose' } }
