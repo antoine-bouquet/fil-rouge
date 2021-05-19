@@ -146,7 +146,7 @@ pipeline {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOG$
+                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOGIN__PSW}"  student.yml
                       '''
                 }
             }
