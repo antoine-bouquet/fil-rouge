@@ -21,7 +21,7 @@ pipeline {
             steps {
                script {
                  sh '''
-                    docker-compose -up -d
+                    docker-compose up -d
                     sleep 5
                  '''
                }
