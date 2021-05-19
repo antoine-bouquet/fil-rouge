@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        IMAGE_NAME = "api-fil-rouge"
+        IMAGE_NAME = "fil-rouge"
         IMAGE_TAG = "latest"
         IMAGE_REPO = "registry.gitlab.com/fil-rouge2/fil-rouge"
         LOCAL_REPO = "192.168.31.135:5001"
@@ -15,7 +15,29 @@ pipeline {
                 }
              }
         }
-        stage('Run container based on builded image') {
+      stage('Run container based on builded image') {
+            agent { docker { image 'docker' } }
+            steps {
+               script {
+                 sh '''
+                    docker run --name $IMAGE_NAME -d -p 5000:5000 $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG
+                    sleep 5
+                 '''
+                }
+            }
+       }
+       stage('Test image api') {
+            agent { docker { image 'curlimages/curl' } }
+            steps {
+                script {
+                        sh '''
+                    	curl -u toto:python -X GET http://192.168.31.135:5000/pozos/api/v1.0/get_student_ages
+
+                        '''
+              }
+           }
+        }
+        stage('Run containers of the  application') {
             agent { docker { image 'tmaier/docker-compose' } }
             steps {
                script {
@@ -23,11 +45,11 @@ pipeline {
                     docker-compose up -d
                     sleep 5
                  '''
-               }
+                }
             }
        }
 
-       stage('Test image api') {
+       stage('Test the application') {
             agent { docker { image 'curlimages/curl' } }
             steps {
                 script {
