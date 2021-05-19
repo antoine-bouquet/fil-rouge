@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                         sh '''
-                        curl -u toto:python -X GET http://192.168.31.135:5000/pozos/api/v1.0/get_student_ages 
+                        curl http://192.168.31.135:50 
                         '''
               }
            }
