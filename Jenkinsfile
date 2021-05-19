@@ -1,6 +1,7 @@
 pipeline {
     environment {
-        IMAGE_NAME = "fil-rouge"
+        API_IMAGE_NAME = "api-fil-rouge"
+        FRONT_IMAGE_NAME= "php:7.2-apache"
         IMAGE_TAG = "latest"
         IMAGE_REPO = "registry.gitlab.com/fil-rouge2/fil-rouge"
         LOCAL_REPO = "192.168.31.135:5001"
@@ -11,7 +12,7 @@ pipeline {
              agent { docker { image 'docker' } }
              steps {
                 script {
-                  sh 'docker build -t $LOCAL_REPO/$IMAGE_NAME:$IMAGE_TAG simple_api/'
+                  sh 'docker build -t ${IMAGE_REPO}/${API_IMAGE_NAME}:${IMAGE_TAG} simple_api/'
                 }
              }
         }
@@ -20,12 +21,13 @@ pipeline {
             steps {
                script {
                  sh '''
-                    docker run --name $IMAGE_NAME -d -p 5000:5000 $LOCAL_REPO/$IMAGE_NAME:$IMAGE_TAG
+                    docker-compose -up -d
                     sleep 5
                  '''
                }
             }
        }
+
        stage('Test image api') {
             agent { docker { image 'curlimages/curl' } }
             steps {
@@ -41,22 +43,11 @@ pipeline {
           steps {
              script {
                sh '''
-                  docker rm -vf ${IMAGE_NAME}
+                  docker rm -vf api website
                '''
              }
           }
      }
-    stage('Push image on localregistry') {
-           agent { docker { image 'docker' } }
-
-           steps {
-               script {
-                   sh '''
-                   docker push ${LOCAL_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
-                   '''
-               }
-           }
-        }
     stage('Push image on gitlab') {
            agent { docker { image 'docker' } }
            environment {
@@ -67,7 +58,6 @@ pipeline {
                script {
                    sh '''
                    docker login registry.gitlab.com --username ${GITLAB_LOGIN_USR} --password ${GITLAB_LOGIN_PSW}
-                   docker tag ${LOCAL_REPO}/${IMAGE_NAME}:${IMAGE_TAG}  ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
 	           docker push ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
                    '''
                }

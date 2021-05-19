@@ -6,8 +6,8 @@ services:
     depends_on:
       - api   
     environment:
-      - USERNAME=toto
-      - PASSWORD=python
+      - USERNAME=${API_USER}
+      - PASSWORD=${API_PWD}
     networks:
       - webapp-network
     volumes:
