@@ -20,13 +20,20 @@
         dest: /home/{{ ansible_user }}/fil-rouge/website/
     
     - name: Log into private registry
-      community.docker.docker_login:
-
+      docker_login:
         registry_url: registry.gitlab.com/fil-rouge2/fil-rouge
         username: "{{ username }}"
         password: "{{ password }}"
         reauthorize: yes
     
+    - name: Remove api  container
+      docker_container:
+        name: api
+        state: absent
+    - name : Remove website container
+      docker_container:
+        name: website
+        state: absent    
     - name: Create website container
       docker_container:
         name: "website"
