@@ -95,7 +95,7 @@ pipeline {
                }
            }
         }
-        stage('deploy with ansible') {
+        stage('deploy with ansible on staging') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             environment {
                 GITLAB_LOGIN = credentials('gitlab_login_antoine')
@@ -106,12 +106,52 @@ pipeline {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOGIN_PSW}"  student.yml
+                        ansible-playbook  -i stag.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOGIN_PSW}"  student.yml
                       '''
                 }
             }
         }
-       stage('test the deployment of the front end ') {
+       stage('test the deployment of the front end on staging ') {
+            agent { docker { image 'dirane/docker-ansible:latest' } }
+            steps {
+                script {
+
+                    sh '''
+                        cd ansible
+                        ansible-playbook -i stag.yml test_front.yml
+                        '''
+                }
+            }
+        }
+       stage('test the deployment of the API on  staging') {
+            agent { docker { image 'dirane/docker-ansible:latest' } }
+            steps {
+                script {
+
+                    sh '''
+                        cd ansible
+                        ansible-playbook -i stag.yml test_api.yml
+                        '''
+                }
+            }
+        }
+        stage('deploy with ansible on prod') {
+            agent { docker { image 'dirane/docker-ansible:latest' } }
+            environment {
+                GITLAB_LOGIN = credentials('gitlab_login_antoine')
+                API_LOGIN = credentials('student_api_login')
+            }
+
+            steps {
+                script {
+                    sh '''
+                        cd ansible
+                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOG$
+                      '''
+                }
+            }
+        }
+         stage('test the deployment of the front end on prod ') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             steps {
                 script {
@@ -123,7 +163,7 @@ pipeline {
                 }
             }
         }
-       stage('test the deployment of the API ') {
+      stage('test the deployment of the API on prod') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             steps {
                 script {

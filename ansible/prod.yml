@@ -3,6 +3,4 @@ prod:
   hosts:
     production:
       ansible_host: 192.168.31.134
-    staging:
-      ansible_host: 192.168.31.133
 ...
