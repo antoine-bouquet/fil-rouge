@@ -37,6 +37,17 @@ pipeline {
               }
            }
         }
+        stage('Clean Container') {
+          agent { docker { image 'docker' } }
+          steps {
+             script {
+               sh '''
+                  docker rm -vf ${IMAGE_NAME}
+               '''
+             }
+          }
+     }
+
         stage('Run containers of the  application') {
             agent { docker { image 'tmaier/docker-compose' } }
             steps {
