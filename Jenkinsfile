@@ -77,13 +77,14 @@ pipeline {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             environment {
                 GITLAB_LOGIN = credentials('gitlab_login_antoine')
+                API_LOGIN = credentials('student_api_login')
             }
 
             steps {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW}"  student.yml
+                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW} apiuser=${API_LOGIN_USR} apipwd=${API_LOGIN_PSW}"  student.yml
                       '''
                 }
             }

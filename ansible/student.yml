@@ -16,6 +16,7 @@
         dest: /home/{{ ansible_user }}/fil-rouge/       
     - name: Log into private registry
       community.docker.docker_login:
+
         registry_url: registry.gitlab.com/fil-rouge2/fil-rouge
         username: "{{ username }}"
         password: "{{ password }}"
@@ -28,8 +29,8 @@
         ports: 80:80
         pull: true
         env: 
-          USERNAME: "toto"
-          PASSWORD: "python"
+          USERNAME: "{{ apiuser }}"
+          PASSWORD: "{{ apipwd }}"
         volumes:
           - /home/centos/fil-rouge/website:/var/www/html
 
