@@ -1,0 +1,17 @@
+
+---
+- name: "Availability test"
+  become: yes
+  hosts: prod
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: "Test"
+      uri:
+        url: "http://{{ ansible_host }}:5000/pozos/api/v1.0/get_student_ages"
+        user: toto
+        password: python
+        return_content: yes
+      register: this
+      failed_when: "'alice' not in this.content"
+...

@@ -89,14 +89,26 @@ pipeline {
                 }
             }
         }
-       stage('test the deployment') {
+       stage('test the deployment of the front end ') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             steps {
                 script {
 
                     sh '''
                         cd ansible
-                        ansible-playbook -i prod.yml test.yml
+                        ansible-playbook -i prod.yml test_front.yml
+                        '''
+                }
+            }
+        }
+       stage('test the deployment of the API ') {
+            agent { docker { image 'dirane/docker-ansible:latest' } }
+            steps {
+                script {
+
+                    sh '''
+                        cd ansible
+                        ansible-playbook -i prod.yml test_api.yml
                         '''
                 }
             }
