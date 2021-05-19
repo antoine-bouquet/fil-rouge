@@ -10,10 +10,15 @@
         path: "/home/{{ ansible_user }}/fil-rouge/"
         state: absent
     
-    - name: example copying file with owner and permissions
+    - name:  copying api  file 
       copy:
-        src: ../
-        dest: /home/{{ ansible_user }}/fil-rouge/       
+        src: ../simple_api/
+        dest: /home/{{ ansible_user }}/fil-rouge/simple_api/       
+    - name: copying website  file
+      copy:
+        src: ../website/
+        dest: /home/{{ ansible_user }}/fil-rouge/website/
+    
     - name: Log into private registry
       community.docker.docker_login:
 
