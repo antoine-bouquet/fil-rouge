@@ -14,7 +14,13 @@
       copy:
         src: ../
         dest: /home/{{ ansible_user }}/fil-rouge/       
-
+    - name: Log into private registry
+      community.docker.docker_login:
+        registry_url: registry.gitlab.com/fil-rouge2/fil-rouge
+        username: "{{ username }}"
+        password: "{{ password }}"
+        reauthorize: yes
+    
     - name: Create website container
       docker_container:
         name: "website"
@@ -30,7 +36,7 @@
     - name: Create api containers
       docker_container:
         name: "api"
-        image: "antoinebouquet1010/fil-rouge-test"
+        image: "registry.gitlab.com/fil-rouge2/fil-rouge/fil-rouge"
         ports: 5000:5000
         pull: true
         volumes: 

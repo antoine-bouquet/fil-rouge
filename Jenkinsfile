@@ -75,11 +75,15 @@ pipeline {
         }
         stage('deploy with ansible') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
+            environment {
+                GITLAB_LOGIN = credentials('gitlab_login_antoine')
+            }
+
             steps {
                 script {
                     sh '''
                         cd ansible
-                        ansible-playbook  -i prod.yml student.yml
+                        ansible-playbook  -i prod.yml -e "username=${GITLAB_LOGIN_USR} password=${GITLAB_LOGIN_PSW}"  student.yml
                       '''
                 }
             }
