@@ -17,7 +17,7 @@ pipeline {
              }
         }
         stage('Run container based on builded image') {
-            agent { docker { image 'docker' } }
+            agent { docker { image 'tmaier/docker-compose' } }
             steps {
                script {
                  sh '''
