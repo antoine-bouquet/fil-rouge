@@ -34,6 +34,9 @@
       docker_container:
         name: website
         state: absent    
+    - name: Create network
+      docker_network:
+        name: fil_rouge_network
     - name: Create website container
       docker_container:
         name: "website"
@@ -45,13 +48,17 @@
           PASSWORD: "{{ apipwd }}"
         volumes:
           - /home/centos/fil-rouge/website:/var/www/html
-
+        networks:
+          - name: fil_rouge_network
+    
     - name: Create api containers
       docker_container:
         name: "api"
         image: "registry.gitlab.com/fil-rouge2/fil-rouge/fil-rouge"
         ports: 5000:5000
         pull: true
-        volumes: 
+        volumes:
           - /home/centos/fil-rouge/simple_api:/data
+        networks:
+          - name: fil_rouge_network
 ...

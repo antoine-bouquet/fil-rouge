@@ -13,14 +13,12 @@ services:
     volumes:
       - ./website:/var/www/html
     ports:
-      - "80:80"
+      - "50:80"
   api:
     container_name: api
-    image: antoinebouquet1010/fil-rouge:latest
+    image: registry.gitlab.com/fil-rouge2/fil-rouge/fil-rouge
     volumes:
       - ./simple_api/student_age.json:/data/student_age.json
-    ports:
-      - "5000:5000"
     networks:
       - webapp-network
 
