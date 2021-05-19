@@ -1,7 +1,6 @@
 pipeline {
     environment {
-        API_IMAGE_NAME = "api-fil-rouge"
-        FRONT_IMAGE_NAME= "php:7.2-apache"
+        IMAGE_NAME = "api-fil-rouge"
         IMAGE_TAG = "latest"
         IMAGE_REPO = "registry.gitlab.com/fil-rouge2/fil-rouge"
         LOCAL_REPO = "192.168.31.135:5001"
@@ -12,7 +11,7 @@ pipeline {
              agent { docker { image 'docker' } }
              steps {
                 script {
-                  sh 'docker build -t ${IMAGE_REPO}/${API_IMAGE_NAME}:${IMAGE_TAG} simple_api/'
+                  sh 'docker build -t ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} simple_api/'
                 }
              }
         }
