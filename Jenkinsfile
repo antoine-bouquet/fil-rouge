@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                         sh '''
-                        curl http://192.168.31.135:50 
+                        curl -d "submit=yes" http://192.168.31.135:50 | grep "alice"
                         '''
               }
            }
@@ -111,31 +111,19 @@ pipeline {
                 }
             }
         }
-       stage('test the deployment of the front end on staging ') {
+       stage('test the deployment  on staging ') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             steps {
                 script {
 
                     sh '''
                         cd ansible
-                        ansible-playbook -i stag.yml test_front.yml
+                        ansible-playbook -i stag.yml test.yml
                         '''
                 }
             }
         }
-       stage('test the deployment of the API on  staging') {
-            agent { docker { image 'dirane/docker-ansible:latest' } }
-            steps {
-                script {
-
-                    sh '''
-                        cd ansible
-                        ansible-playbook -i stag.yml test_api.yml
-                        '''
-                }
-            }
-        }
-        stage('deploy with ansible on prod') {
+       stage('deploy with ansible on prod') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             environment {
                 GITLAB_LOGIN = credentials('gitlab_login_antoine')
@@ -151,26 +139,14 @@ pipeline {
                 }
             }
         }
-         stage('test the deployment of the front end on prod ') {
+         stage('test the deployment on prod ') {
             agent { docker { image 'dirane/docker-ansible:latest' } }
             steps {
                 script {
 
                     sh '''
                         cd ansible
-                        ansible-playbook -i prod.yml test_front.yml
-                        '''
-                }
-            }
-        }
-      stage('test the deployment of the API on prod') {
-            agent { docker { image 'dirane/docker-ansible:latest' } }
-            steps {
-                script {
-
-                    sh '''
-                        cd ansible
-                        ansible-playbook -i prod.yml test_api.yml
+                        ansible-playbook -i prod.yml test.yml
                         '''
                 }
             }

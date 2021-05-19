@@ -8,9 +8,9 @@
   tasks:
     - name: "Test"
       uri:
-        url: "http://{{ ansible_host }}:5000/pozos/api/v1.0/get_student_ages"
-        user: toto
-        password: python
+        url: "http://{{ ansible_host }}"
+        method: POST
+        body: submit=yes
         return_content: yes
       register: this
       failed_when: "'alice' not in this.content"
